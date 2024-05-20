@@ -1,41 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/textfield.dart';
 
-class OrderReceived extends StatelessWidget {
-  OrderReceived({Key? key}) : super(key: key);
+class TrackOrder extends StatefulWidget {
+  const TrackOrder({super.key});
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  _TrackOrderState createState() => _TrackOrderState();
+}
 
-  final FocusNode _focusNode1 = FocusNode();
-  final FocusNode _focusNode2 = FocusNode();
+class _TrackOrderState extends State<TrackOrder> {
+  final String orderId = "123456";
+  final String orderDate = "2024-05-20";
+  final String deliveryDate = "2024-05-27";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: MyTextField(
-              hintText: "Email",
-              controller: emailController,
-              prefixIcon: Icons.email_rounded,
-              focusNode: _focusNode1,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: MyTextField(
-              hintText: 'Password',
-              controller: passwordController,
-              prefixIcon: Icons.lock,
-              focusNode: _focusNode2,
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: SizedBox(
+            height: 100,
+            width: 200,
+            child: Image.asset('images/plantify.png', fit: BoxFit.contain)),
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: Colors.green,
+              size: 100,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Thank you for your order!',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Your order has been received successfully.',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 32),
+            _buildOrderDetailRow('Order ID', orderId),
+            SizedBox(height: 16),
+            _buildOrderDetailRow('Order Date', orderDate),
+            SizedBox(height: 16),
+            _buildOrderDetailRow('Estimated Delivery', deliveryDate),
+            SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Continue Shopping'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrderDetailRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          value,
+          style: TextStyle(fontSize: 18),
+        ),
+      ],
     );
   }
 }
