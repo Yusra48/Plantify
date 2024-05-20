@@ -28,7 +28,7 @@ class _TrackOrderState extends State<TrackOrder> {
           children: [
             Icon(
               Icons.check_circle,
-              color: Colors.green,
+              color: Colors.teal,
               size: 100,
             ),
             SizedBox(height: 16),
@@ -49,6 +49,10 @@ class _TrackOrderState extends State<TrackOrder> {
             _buildOrderDetailRow('Estimated Delivery', deliveryDate),
             SizedBox(height: 32),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 180)),
               onPressed: () {
                 Navigator.pop(context);
               },
