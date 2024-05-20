@@ -186,8 +186,10 @@ class _HomeViewState extends State<HomeView> {
         actions: <Widget>[
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TrackOrder()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TrackOrder()));
               },
               icon: const Icon(Icons.track_changes_outlined)),
         ],
@@ -255,27 +257,27 @@ class _HomeViewState extends State<HomeView> {
                     color: Colors.green,
                     image: const AssetImage('images/Plant.png'),
                     name: 'Peperomia',
-                    price: '400',
+                    price: '\$400',
                   ),
                   _buildPlantItem(
                     color: const Color.fromRGBO(247, 128, 167, 1),
                     image: const AssetImage('images/Plant.png'),
                     name: 'Watermelon',
-                    price: '300',
+                    price: '\$300',
                   ),
                   const SizedBox(height: 5),
                   _buildPlantItem(
                     color: const Color.fromRGBO(255, 243, 136, 1),
                     image: const AssetImage('images/yellowflower.png'),
                     name: 'Croton Petra',
-                    price: '350',
+                    price: '\$350',
                   ),
                   const SizedBox(height: 5),
                   _buildPlantItem(
                     color: const Color(0xFF59F0E1),
                     image: const AssetImage('images/plantpot.png'),
                     name: 'Bird’s Nest Fern',
-                    price: '450',
+                    price: '\$450',
                   ),
                   const SizedBox(height: 5),
                   _buildPlantItem(
@@ -289,19 +291,19 @@ class _HomeViewState extends State<HomeView> {
                     color: const Color(0xFFFFC368),
                     image: const AssetImage('images/Plant.png'),
                     name: 'Cactus',
-                    price: '500',
+                    price: '\$500',
                   ),
                   const SizedBox(height: 5),
                   _buildPlantItem(
                     color: const Color(0xFF59F0E1),
                     image: const AssetImage('images/whiteplant.png'),
                     name: 'Aloe Vera',
-                    price: '450',
+                    price: '\$450',
                   ),
                   const SizedBox(height: 5),
                   _buildPlantItem(
                     color: const Color(0xFF59F0E1),
-                    image: const AssetImage('images/Logo.png'),
+                    image: const AssetImage('images/plantpot.png'),
                     name: 'Plant a Life',
                     price: 'Live amongst Living.Spread the joy',
                   ),
@@ -418,19 +420,23 @@ class _HomeViewState extends State<HomeView> {
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 3),
-                IconButton(
-                  icon: const Icon(Icons.add_shopping_cart),
-                  color: Colors.teal,
-                  onPressed: () {
-                    _addtoCart(name, price);
-                  },
-                ),
-                const SizedBox(height: 3),
-                const Icon(
-                  Icons.favorite,
-                  color: Colors.teal,
-                ),
+                Row(
+                  children: [
+                    const SizedBox(height: 3),
+                    IconButton(
+                      icon: const Icon(Icons.add_shopping_cart),
+                      color: Colors.teal,
+                      onPressed: () {
+                        _addtoCart(name, price);
+                      },
+                    ),
+                    const SizedBox(width: 9),
+                    const Icon(
+                      Icons.favorite,
+                      color: Colors.teal,
+                    ),
+                  ],
+                )
               ],
             ),
           ],
