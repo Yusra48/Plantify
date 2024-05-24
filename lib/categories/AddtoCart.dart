@@ -13,28 +13,45 @@ class Addtocart extends StatelessWidget {
           color: Colors.black,
         ),
         title: SizedBox(
-            height: 100,
-            width: 200,
-            child: Image.asset('images/plantify.png', fit: BoxFit.contain)),
-        actions: const [
-          Icon(Icons.search, color: Colors.grey),
+          height: 100,
+          width: 200,
+          child: Image.asset('images/plantify.png', fit: BoxFit.contain),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            color: Colors.black,
+            onPressed: () {},
+          ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 20),
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Your Bag',
               style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.teal,
-                  letterSpacing: 2.5),
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal,
+                letterSpacing: 2.5,
+              ),
             ),
             const SizedBox(height: 10),
-            _buildCartItems(),
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(child: _buildCartItems()),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Image.asset('images/Group 129.png', width: 450),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -60,7 +77,7 @@ class Addtocart extends StatelessWidget {
           );
         }
 
-        final List<DocumentSnapshot> documents = snapshot.data!.docs;
+        final List<QueryDocumentSnapshot> documents = snapshot.data?.docs ?? [];
 
         if (documents.isEmpty) {
           return const Center(
@@ -68,23 +85,33 @@ class Addtocart extends StatelessWidget {
           );
         }
 
-        return Expanded(
-          child: ListView.builder(
-            itemCount: documents.length,
-            itemBuilder: (context, index) {
-              final Map<String, dynamic> data =
-                  documents[index].data() as Map<String, dynamic>;
+        return ListView.builder(
+          itemCount: documents.length,
+          itemBuilder: (context, index) {
+            final Map<String, dynamic>? data =
+                documents[index].data() as Map<String, dynamic>?;
 
-              final String itemName = data['itemName'];
-              final String price = data['price'];
-
+            if (data == null) {
               return ListTile(
-                title: Text(itemName),
-                subtitle: Text('Price: $price'),
-                trailing: Icon(Icons.delete),
+                title: const Text('Unknown Item'),
+                subtitle: const Text('Error retrieving item details'),
               );
-            },
-          ),
+            }
+
+            final String itemName = data['itemName'] ?? 'Unknown Item';
+            final String price = data['price'] ?? 'Unknown Price';
+
+            return ListTile(
+              title: Text(itemName),
+              subtitle: Text('Price: $price'),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () async {
+                  await documents[index].reference.delete();
+                },
+              ),
+            );
+          },
         );
       },
     );
